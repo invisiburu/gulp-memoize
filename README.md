@@ -6,22 +6,24 @@
 [![Build status][build]][build-url]
 [![Coverage status][coverage]][coverage-url]
 
-[npm]: https://img.shields.io/npm/v/gulp-cache.svg
-[npm-url]: https://www.npmjs.com/package/gulp-cache
+[npm]: https://img.shields.io/npm/v/gulp-memoize.svg
+[npm-url]: https://www.npmjs.com/package/gulp-memoize
 
-[node]: https://img.shields.io/node/v/gulp-cache.svg
+[node]: https://img.shields.io/node/v/gulp-memoize.svg
 [node-url]: https://nodejs.org
 
-[deps]: https://img.shields.io/david/jgable/gulp-cache.svg
-[deps-url]: https://david-dm.org/jgable/gulp-cache
+[deps]: https://img.shields.io/david/invisiburu/gulp-memoize.svg
+[deps-url]: https://david-dm.org/invisiburu/gulp-memoize
 
-[build]: https://travis-ci.org/jgable/gulp-cache.svg?branch=master
-[build-url]: https://travis-ci.org/jgable/gulp-cache
+[build]: https://travis-ci.org/invisiburu/gulp-memoize.svg?branch=master
+[build-url]: https://travis-ci.org/invisiburu/gulp-memoize
 
-[coverage]: https://img.shields.io/coveralls/jgable/gulp-cache.svg
-[coverage-url]: https://coveralls.io/r/jgable/gulp-cache
+[coverage]: https://img.shields.io/coveralls/invisiburu/gulp-memoize.svg
+[coverage-url]: https://coveralls.io/r/invisiburu/gulp-memoize
 
-A temp file based caching proxy task for [gulp](http://gulpjs.com/).
+Based on the [gulp-cache](https://github.com/jgable/gulp-cache)
+
+A task memoize proxy task for [gulp](http://gulpjs.com/).
 
 ## Install
 
@@ -142,7 +144,7 @@ Options for `gulp-cache` plugin.
 
 > [Optional] What to use to determine the uniqueness of an input file for this task.
 
-- Can return a string or a `Promise` that resolves to a string.  
+- Can return a string or a `Promise` that resolves to a string.
 
 - The result of this method is converted to a unique MD5 hash automatically; no need to do this yourself.
 

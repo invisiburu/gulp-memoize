@@ -24,25 +24,8 @@ DO NOT TOUCH. SAVE IT ON TOP.
 
 -->
 
-## [1.1.3] - 2019-08-10
-### Changed
-- `new Buffer` -> `Buffer.from`;
-- Docs.
+## [1.0.0] - 2021-09-25
+### Added
+- Forked from https://github.com/jgable/gulp-cache
 
-## [1.1.2] - 2019-06-08
-### Changed
-- `trigen-scripts` as dev tool;
-- Dependencies were updated.
-
-## [1.1.1] - 2019-01-23
-### Fixed
-- [#75](https://github.com/jgable/gulp-cache/issues/75)
-
-## [1.1.0] - 2019-01-07
-### Changed
-- Dependencies were updated;
-- README.md was updated.
-
-## [1.0.2] - 2017-12-30
-### Changed
-- `gulp-util` -> `plugin-error`
+[Unreleased]: https://github.com/invisiburu/web-client/compare/1.0.0...HEAD
