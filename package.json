@@ -1,6 +1,7 @@
 {
   "name": "@invisiburu/gulp-memoize",
   "version": "1.0.0",
+  "private": false,
   "description": "A task memoize plugin for Gulp",
   "author": "Maksym Nesterov <maxym.nes.dev@gmail.com>  (https://github.com/invisiburu)",
   "contributors": [
