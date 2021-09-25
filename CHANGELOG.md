@@ -28,4 +28,8 @@ DO NOT TOUCH. SAVE IT ON TOP.
 ### Added
 - Forked from https://github.com/jgable/gulp-cache
 
+### Changed
+- Renamed to `gulp-memoize`
+- Now stores the cache in-memory and depends on the file contents only
+
 [Unreleased]: https://github.com/invisiburu/web-client/compare/1.0.0...HEAD

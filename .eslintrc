@@ -1,6 +1,15 @@
 {
-	"extends": "trigen/base",
-	"env": {
-		"node": true
-	}
+  "extends": "trigen/base",
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "semi": "off",
+    "arrow-parens": "off",
+    "padding-line-between-statements": "off",
+    "comma-dangle": "off",
+    "curly": ["error", "multi-line"],
+    "key-spacing": ["error", { "mode": "strict" }],
+    "indent": ["error", 2, { "SwitchCase": 1 }]
+  }
 }

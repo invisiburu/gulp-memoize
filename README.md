@@ -1,4 +1,4 @@
-# gulp-cache
+# gulp-memoize
 
 [![NPM version][npm]][npm-url]
 [![Node version][node]][node-url]
@@ -28,9 +28,9 @@ A task memoize proxy task for [gulp](http://gulpjs.com/).
 ## Install
 
 ```bash
-npm i -D gulp-cache
+npm i -D gulp-memoize
 # or
-yarn add -D gulp-cache
+yarn add -D gulp-memoize
 ```
 
 ## Usage
@@ -39,17 +39,17 @@ yarn add -D gulp-cache
 import gulp from 'gulp';
 import favicons from 'gulp-favicons';
 import srcset from 'gulp-srcset';
-import cache from 'gulp-cache';
+import memoize from 'gulp-memoize';
 
 gulp.task('favicon', () =>
     gulp.src('src/favicon.svg')
-        .pipe(cache(
-            // Target plugin, the output of which will be cached.
+        .pipe(memoize(
+            // Target plugin, the output of which will be memoized.
             favicons(faviconsConfig),
-            // Options for `gulp-cache` plugin.
+            // Options for `gulp-memoize` plugin.
             {
-                // Bucket to store favicons in cache.
-                name: 'favicons'
+                // Report on every restored file
+                verbose: true
             }
         ))
         .pipe(gulp.dest('./favicons'))
@@ -57,15 +57,7 @@ gulp.task('favicon', () =>
 
 gulp.task('images', () =>
     gulp.src('src/**/*.{jpg,png,svg}')
-        .pipe(cache(
-            // Target plugin, the output of which will be cached.
-            srcset(srcsetRules),
-            // Options for `gulp-cache` plugin.
-            {
-                // Bucket to store images in cache.
-                name: 'images'
-            }
-        ))
+        .pipe(memoize(srcset(srcsetRules)))
         .pipe(gulp.dest('./images'))
 );
 ```
@@ -77,7 +69,7 @@ gulp.task('images', () =>
 import fs from 'fs';
 import gulp from 'gulp';
 import jshint from 'gulp-jshint';
-import cache from 'gulp-cache';
+import memoize from 'gulp-memoize';
 
 const jsHintVersion = '2.4.1';
 const jshintOptions = fs.readFileSync('.jshintrc');
@@ -89,23 +81,13 @@ function makeHashKey(file) {
 
 gulp.task('lint', () =>
     gulp.src('src/**/*.js')
-        .pipe(cache(
-            // Target plugin, the output of which will be cached.
+        .pipe(memoize(
+            // Target plugin, the output of which will be memoized.
             jshint('.jshintrc'),
-            // Options for `gulp-cache` plugin.
+            // Options for `gulp-memoize` plugin.
             {
                 key: makeHashKey,
-                // What on the result indicates it was successful
-                success(jshintedFile) {
-                    return jshintedFile.jshint.success;
-                },
-                // What to store as the result of the successful action
-                value(jshintedFile) {
-                    // Will be extended onto the file object on a cache hit next time task is ran
-                    return {
-                        jshint: jshintedFile.jshint
-                    };
-                }
+                verbose: true
             }
         ))
         .pipe(jshint.reporter('default'))
@@ -116,29 +98,21 @@ gulp.task('lint', () =>
 
 ## API
 
-### `cache(pluginToCache [, options])`
+### `memoize(pluginToMemoize [, options])`
 
-#### `pluginToCache`
+#### `pluginToMemoize`
 
-Target plugin, the output of which will be cached.
+Target task, the output of which will be memoized.
 
 #### `options`
 
-Options for `gulp-cache` plugin.
+Options for `gulp-memoize` plugin.
 
-##### `options.fileCache`
+##### `options.verbose`
 
-> [Optional] Where to store the cache objects
+> [Optional] Should the plugin report on every restored file
 
-- Defaults to `new Cache({ cacheDirName: 'gulp-cache' })`
-
-- Create your own with [`new cache.Cache({ cacheDirName: 'custom-cache' })`](https://github.com/jgable/cache-swap)
-
-##### `options.name`
-
-> [Optional] The name of the bucket which stores the cached objects
-
-- Defaults to `default`
+- Defaults to `false`
 
 ##### `options.key`
 
@@ -150,69 +124,23 @@ Options for `gulp-cache` plugin.
 
 - Defaults to `file.contents` if a Buffer, or `undefined` if a Stream.
 
-##### `options.success`
+##### `options.memo`
 
-> [Optional] How to determine if the resulting file was successful.
+> [Optional] Custom Memo instance. Default is `new Map<string, Vinyl[]>()`.
 
-- Must return a truthy value that is used to determine whether to cache the result of the task. `Promise` is supported.
+- Should implement the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) interface
 
-- Defaults to true, so any task results will be cached.
+- Keys of the Memo are strings, values are arrays of Vinyl files
 
-##### `options.value`
+##### `options.clearMemoOnFlush`
 
-> [Optional] What to store as the cached result of the task.
+> [Optional] Should the memo be cleared after the task execution
 
-- Can be a function that returns an Object or a `Promise` that resolves to an Object.
-
-- Can also be set to a string that will be picked of the task result file.
-
-- The result of this method is run through `JSON.stringify` and stored in a temp file for later retrieval.
-
-- Defaults to `'contents'` which will grab the resulting file.contents and store them as a string.
-
-## Clearing the cache
-
-If you find yourself needing to clear the cache, there is a handy dandy `cache.clearAll()` method:
-
-```js
-import cache from 'gulp-cache';
-
-gulp.task('clear', () =>
-    cache.clearAll()
-);
-```
-
-You can then run it with `gulp clear`.
-
-## One-to-many caching
-
-To support one-to-many caching in Your Gulp-plugin, you should:
-
-* Use `clone` method, to save `_cachedKey` property:
-```js
-const outputFile1 = inputFile.clone({ contents: false });
-const outputFile2 = inputFile.clone({ contents: false });
-
-outputFile1.contents = new Buffer(...);
-outputFile2.contents = new Buffer(...);
-
-const outputFiles = [
-    outputFile1,
-    outputFile2,
-    ...
-];
-```
-* Or, do it manually:
-```js
-const outputFiles = [
-    new Vinyl({..., _cachedKey: inputFile._cachedKey}),
-    new Vinyl({..., _cachedKey: inputFile._cachedKey}),
-    ...
-];
-```
+- Defaults to `true`
 
 ## License
 
 [The MIT License (MIT)](./LICENSE)
 
+Copyright (c) 2021 - present [Maksym Nesterov](https://github.com/invisiburu)
 Copyright (c) 2014 - present [Jacob Gable](http://jacobgable.com)
