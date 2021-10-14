@@ -6,14 +6,14 @@
 [![Build status][build]][build-url]
 [![Coverage status][coverage]][coverage-url]
 
-[npm]: https://img.shields.io/npm/v/gulp-memoize.svg
-[npm-url]: https://www.npmjs.com/package/gulp-memoize
+[npm]: https://img.shields.io/npm/v/@invisiburu/gulp-memoize.svg
+[npm-url]: https://www.npmjs.com/package/@invisiburu/gulp-memoize
 
-[node]: https://img.shields.io/node/v/gulp-memoize.svg
+[node]: https://img.shields.io/node/v/@invisiburu/gulp-memoize.svg
 [node-url]: https://nodejs.org
 
-[deps]: https://img.shields.io/david/invisiburu/gulp-memoize.svg
-[deps-url]: https://david-dm.org/invisiburu/gulp-memoize
+[deps]: https://badgen.net/bundlephobia/dependency-count/@invisiburu/gulp-memoize
+[deps-url]: https://bundlephobia.com/package/@invisiburu/gulp-memoize
 
 [build]: https://travis-ci.org/invisiburu/gulp-memoize.svg?branch=master
 [build-url]: https://travis-ci.org/invisiburu/gulp-memoize
